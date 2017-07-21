@@ -1,3 +1,9 @@
+python-py (1.4.31-1~bpo8+1pexip1) pexip; urgency=medium
+
+  * Prepare Pexip packaging
+
+ -- John-Mark Bell <jmb@pexip.com>  Fri, 21 Jul 2017 19:03:35 +0000
+
 python-py (1.4.31-1~bpo8+1) jessie-backports; urgency=medium
 
   * Rebuild for jessie-backports.
