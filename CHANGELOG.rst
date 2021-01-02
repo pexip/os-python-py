@@ -1,3 +1,143 @@
+1.10.0 (2020-12-12)
+===================
+
+- Fix a regular expression DoS vulnerability in the py.path.svnwc SVN blame functionality (CVE-2020-29651)
+- Update vendored apipkg: 1.4 => 1.5
+- Update vendored iniconfig: 1.0.0 => 1.1.1
+
+1.9.0 (2020-06-24)
+==================
+
+- Add type annotation stubs for the following modules:
+
+  * ``py.error``
+  * ``py.iniconfig``
+  * ``py.path`` (not including SVN paths)
+  * ``py.io``
+  * ``py.xml``
+
+  There are no plans to type other modules at this time.
+
+  The type annotations are provided in external .pyi files, not inline in the
+  code, and may therefore contain small errors or omissions. If you use ``py``
+  in conjunction with a type checker, and encounter any type errors you believe
+  should be accepted, please report it in an issue.
+
+1.8.2 (2020-06-15)
+==================
+
+- On Windows, ``py.path.local``s which differ only in case now have the same
+  Python hash value. Previously, such paths were considered equal but had
+  different hashes, which is not allowed and breaks the assumptions made by
+  dicts, sets and other users of hashes.
+
+1.8.1 (2019-12-27)
+==================
+
+- Handle ``FileNotFoundError`` when trying to import pathlib in ``path.common``
+  on Python 3.4 (#207).
+
+- ``py.path.local.samefile`` now works correctly in Python 3 on Windows when dealing with symlinks.
+
+1.8.0 (2019-02-21)
+==================
+
+- add ``"importlib"`` pyimport mode for python3.5+, allowing unimportable test suites
+  to contain identically named modules.
+
+- fix ``LocalPath.as_cwd()`` not calling ``os.chdir()`` with ``None``, when
+  being invoked from a non-existing directory.
+
+
+1.7.0 (2018-10-11)
+==================
+
+- fix #174: use ``shutil.get_terminal_size()`` in Python 3.3+ to determine the size of the
+  terminal, which produces more accurate results than the previous method.
+
+- fix pytest-dev/pytest#2042: introduce new ``PY_IGNORE_IMPORTMISMATCH`` environment variable
+  that suppresses ``ImportMismatchError`` exceptions when set to ``1``.
+
+
+1.6.0 (2018-08-27)
+==================
+
+- add ``TerminalWriter.width_of_current_line`` (i18n version of
+  ``TerminalWriter.chars_on_current_line``), a read-only property
+  that tracks how wide the current line is, attempting to take
+  into account international characters in the calculation.
+
+1.5.4 (2018-06-27)
+==================
+
+- fix pytest-dev/pytest#3451: don't make assumptions about fs case sensitivity
+  in ``make_numbered_dir``.
+
+1.5.3
+=====
+
+- fix #179: ensure we can support 'from py.error import ...'
+
+1.5.2
+=====
+
+- fix #169, #170: error importing py.log on Windows: no module named ``syslog``.
+
+1.5.1
+=====
+
+- fix #167 - prevent pip from installing py in unsupported Python versions.
+
+1.5.0
+=====
+
+NOTE: **this release has been removed from PyPI** due to missing package
+metadata which caused a number of problems to py26 and py33 users.
+This issue was fixed in the 1.5.1 release.
+
+- python 2.6 and 3.3 are no longer supported
+- deprecate py.std and remove all internal uses
+- fix #73 turn py.error into an actual module
+- path join to / no longer produces leading double slashes
+- fix #82 - remove unsupportable aliases
+- fix python37 compatibility of path.sysfind on windows by correctly replacing vars
+- turn iniconfig and apipkg into vendored packages and ease de-vendoring for distributions
+- fix #68 remove invalid py.test.ensuretemp references
+- fix #25 - deprecate path.listdir(sort=callable)
+- add ``TerminalWriter.chars_on_current_line`` read-only property that tracks how many characters
+  have been written to the current line.
+
+1.4.34
+====================================================================
+
+- fix issue119 / pytest issue708 where tmpdir may fail to make numbered directories
+  when the filesystem is case-insensitive.
+
+1.4.33
+====================================================================
+
+- avoid imports in calls to py.path.local().fnmatch(). Thanks Andreas Pelme for
+  the PR.
+
+- fix issue106: Naive unicode encoding when calling fspath() in python2. Thanks Tiago Nobrega for the PR.
+
+- fix issue110: unittest.TestCase.assertWarns fails with py imported.
+
+1.4.32
+====================================================================
+
+- fix issue70: added ability to copy all stat info in py.path.local.copy.
+
+- make TerminalWriter.fullwidth a property.  This results in the correct
+  value when the terminal gets resized.
+
+- update supported html tags to include recent additions.
+  Thanks Denis Afonso for the PR.
+
+- Remove internal code in ``Source.compile`` meant to support earlier Python 3 versions that produced the side effect
+  of leaving ``None`` in ``sys.modules`` when called (see pytest-dev/pytest#2103).
+  Thanks Bruno Oliveira for the PR.
+
 1.4.31
 ==================================================
 
@@ -9,7 +149,7 @@
 1.4.30
 ==================================================
 
-- fix issue68 an assert with a  multiline list comprehension 
+- fix issue68 an assert with a  multiline list comprehension
   was not reported correctly. Thanks Henrik Heibuerger.
 
 
@@ -37,7 +177,7 @@
 
 - allow a new ensuresyspath="append" mode for py.path.local.pyimport()
   so that a neccessary import path is appended instead of prepended to
-  sys.path 
+  sys.path
 
 - strike undocumented, untested argument to py.path.local.pypkgpath
 
@@ -85,10 +225,10 @@
   thus triggering the alias module to resolve and blowing
   up with ImportError.  The negative side is that something
   like "py.test.X" will now result in None instead of "importerror: pytest"
-  if pytest is not installed.  But you shouldn't import "py.test" 
+  if pytest is not installed.  But you shouldn't import "py.test"
   anyway anymore.
 
-- adapt one svn test to only check for any exception instead 
+- adapt one svn test to only check for any exception instead
   of specific ones because different svn versions cause different
   errors and we don't care.
 
@@ -111,8 +251,8 @@
   its output even if it didn't flush itself.
 
 - refactor traceback generation in light of pytest issue 364
-  (shortening tracebacks).   you can now set a new traceback style 
-  on a per-entry basis such that a caller can force entries to be 
+  (shortening tracebacks).   you can now set a new traceback style
+  on a per-entry basis such that a caller can force entries to be
   isplayed as short or long entries.
 
 - win32: py.path.local.sysfind(name) will preferrably return files with
@@ -124,7 +264,7 @@
 
 - ignore unicode decode errors in xmlescape.  Thanks Anatoly Bubenkoff.
 
-- on python2 modify traceback.format_exception_only to match python3 
+- on python2 modify traceback.format_exception_only to match python3
   behaviour, namely trying to print unicode for Exception instances
 
 - use a safer way for serializing exception reports (helps to fix
@@ -154,7 +294,7 @@ Changes between 1.4.17 and 1.4.18
 - introduce path.ensure_dir() as a synonym for ensure(..., dir=1)
 
 - some unicode/python3 related fixes wrt to path manipulations
-  (if you start passing unicode particular in py2 you might 
+  (if you start passing unicode particular in py2 you might
   still get problems, though)
 
 Changes between 1.4.16 and 1.4.17
@@ -221,7 +361,7 @@ Changes between 1.4.12 and 1.4.13
 Changes between 1.4.11 and 1.4.12
 ==================================================
 
-- fix python2.4 support - for pre-AST interpreters re-introduce 
+- fix python2.4 support - for pre-AST interpreters re-introduce
   old way to find statements in exceptions (closes pytest issue 209)
 - add tox.ini to distribution
 - fix issue23 - print *,** args information in tracebacks,
@@ -239,7 +379,7 @@ Changes between 1.4.10 and 1.4.11
   unicodeencode/decode problems, amend according test
 - introduce py.builtin.text and py.builtin.bytes
   to point to respective str/unicode (py2) and bytes/str (py3) types
-- fix error handling on win32/py33 for ENODIR 
+- fix error handling on win32/py33 for ENODIR
 
 Changes between 1.4.9 and 1.4.10
 ==================================================
@@ -276,12 +416,12 @@ Changes between 1.4.6 and 1.4.7
 Changes between 1.4.5 and 1.4.6
 ==================================================
 
-- help to fix pytest issue99: unify output of 
+- help to fix pytest issue99: unify output of
   ExceptionInfo.getrepr(style="native") with ...(style="long")
 - fix issue7: source.getstatementrange() now raises proper error
   if no valid statement can be found
-- fix issue8: fix code and tests of svnurl/svnwc to work on subversion 1.7 - 
-  note that path.status(updates=1) will not properly work svn-17's status 
+- fix issue8: fix code and tests of svnurl/svnwc to work on subversion 1.7 -
+  note that path.status(updates=1) will not properly work svn-17's status
   --xml output is broken.
 - make source.getstatementrange() more resilent about non-python code frames
   (as seen from jnja2)
@@ -350,7 +490,7 @@ Changes between 1.3.4 and 1.4.0
 
 - py.test was moved to a separate "pytest" package. What remains is
   a stub hook which will proxy ``import py.test`` to ``pytest``.
-- all command line tools ("py.cleanup/lookup/countloc/..." moved 
+- all command line tools ("py.cleanup/lookup/countloc/..." moved
   to "pycmd" package)
 - removed the old and deprecated "py.magic" namespace
 - use apipkg-1.1 and make py.apipkg.initpkg|ApiModule available

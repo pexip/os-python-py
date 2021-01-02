@@ -1,8 +1,209 @@
-python-py (1.4.31-1~bpo8+1) jessie-backports; urgency=medium
+python-py (1.10.0-1) unstable; urgency=medium
 
-  * Rebuild for jessie-backports.
+  [ Ondřej Nový ]
+  * New upstream release.
+  * Add extend-diff-ignore to ignore generated files
+    (Closes: #978284).
+  * d/p/fix-python3.8.patch: Drop, applied upstream.
+  * d/rules: Add .rst suffix to upstream CHANGELOG file.
+  * d/watch: Bump version to 4.
+  * Bump standards version to 4.5.1.
+  * d/p/fix-python3.9.patch: Drop, "applied" upstream.
+  * Disable pytest 6 not compatible test (Closes: #977089).
 
- -- Tristan Seligmann <mithrandi@debian.org>  Sun, 31 Jan 2016 02:39:05 +0200
+  [ Debian Janitor ]
+  * Remove obsolete field Name from debian/upstream/metadata (already present in
+    machine-readable debian/copyright).
+
+ -- Ondřej Nový <onovy@debian.org>  Sat, 02 Jan 2021 15:19:39 +0100
+
+python-py (1.9.0-2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Ondřej Nový ]
+  * d/control: Update Maintainer field with new Debian Python Team
+    contact address.
+  * d/control: Update Vcs-* fields with new Debian Python Team Salsa
+    layout.
+
+  [ Michael Hudson-Doyle ]
+  * d/patches/fix-python3.9.patch: Fix tests with Python 3.9. (Closes: #973057)
+
+ -- Michael Hudson-Doyle <mwhudson@debian.org>  Wed, 11 Nov 2020 12:02:57 +1300
+
+python-py (1.9.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Rebase patches.
+
+ -- Ondřej Nový <onovy@debian.org>  Thu, 20 Aug 2020 09:41:45 +0200
+
+python-py (1.8.1-4) unstable; urgency=medium
+
+  * Drop python2 support; Closes: #938054
+
+ -- Sandro Tosi <morph@debian.org>  Fri, 17 Jul 2020 17:29:32 -0400
+
+python-py (1.8.1-3) unstable; urgency=medium
+
+  * Drop PyPy support.
+  * Set Rules-Requires-Root: no.
+  * Bump debhelper compat level to 13.
+  * Bump Standards-Version to 4.5.0.
+
+ -- Ondřej Nový <onovy@debian.org>  Fri, 05 Jun 2020 12:31:45 +0200
+
+python-py (1.8.1-2) unstable; urgency=medium
+
+  * Dont run unittests for python2 binary, to reduce pytest rdeps
+
+ -- Sandro Tosi <morph@debian.org>  Mon, 13 Apr 2020 19:58:40 -0400
+
+python-py (1.8.1-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * New upstream release.
+  * Bump Standards-Version to 4.4.1.
+  * Fix unit tests with Python 3.8 and Pytest 4 (Closes: #950054).
+
+  [ Scott Talbert ]
+  * d/control: Remove Suggests dependency on python-pytest-xdist
+
+ -- Ondřej Nový <onovy@debian.org>  Wed, 29 Jan 2020 10:16:50 +0100
+
+python-py (1.8.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * d/copyright: Bump my copyright year
+
+ -- Ondřej Nový <onovy@debian.org>  Mon, 08 Jul 2019 18:47:22 +0200
+
+python-py (1.7.0-2) unstable; urgency=medium
+
+  * Use --ignore instead of -k- for ignoring tests (Closes: #915896)
+  * Bump standards version to 4.3.0 (no changes)
+  * Bump debhelper compat level to 12 and use debhelper-compat
+
+ -- Ondřej Nový <onovy@debian.org>  Tue, 01 Jan 2019 13:00:34 +0100
+
+python-py (1.7.0-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Ondřej Nový <onovy@debian.org>  Thu, 08 Nov 2018 09:30:46 +0100
+
+python-py (1.6.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * Convert git repository from git-dpm to gbp layout
+  * Bump standards version 4.2.1 (no changes)
+  * Add upstream metadata
+
+ -- Ondřej Nový <onovy@debian.org>  Fri, 31 Aug 2018 09:08:59 +0200
+
+python-py (1.5.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * d/control: Remove ancient X-Python3-Version field
+  * Bump Standards-Version to 4.1.5 (no changes needed)
+  * Add {pypy,python,python3}-setuptools-scm to B-D
+
+ -- Ondřej Nový <onovy@debian.org>  Tue, 31 Jul 2018 05:42:06 +0200
+
+python-py (1.5.3-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Ondřej Nový <onovy@debian.org>  Fri, 06 Apr 2018 14:46:39 +0200
+
+python-py (1.5.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * Move under DPMT, add me as uploaders (Closes: #873657)
+  * Bump debhelper compat level to 11
+  * d/copyright:
+    - Use https protocol in Format field
+    - Add myself for Debian part
+  * d/watch: Use https protocol
+  * d/control: Set Vcs-* to salsa.debian.org
+  * Set PYBUILD_NAME
+  * Remove d/gbp.conf: Not needed anymore
+  * Bump Standards-Version to 4.1.3
+  * Bump X-Python3-Version to 3.4
+  * Run tests during build
+  * Replace d/tests with autopkgtest-pkg-python testsuite
+  * Drop versioning of depends on python{,3}-all
+  * Install examples
+
+ -- Ondřej Nový <onovy@debian.org>  Mon, 26 Feb 2018 15:45:21 +0100
+
+python-py (1.4.34-3) unstable; urgency=medium
+
+  * QA upload.
+  * Set maintainer to Debian QA Group. (see #873657)
+  * Add patch to fix autopkgtest failures.
+
+ -- Adrian Bunk <bunk@debian.org>  Wed, 27 Sep 2017 17:47:01 +0300
+
+python-py (1.4.34-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sun, 18 Jun 2017 11:10:14 +0200
+
+python-py (1.4.34-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Mon, 12 Jun 2017 22:27:24 +0200
+
+python-py (1.4.33-1) experimental; urgency=medium
+
+  * New upstream release.
+  * debian/patches: Removed, included upstream.
+  * debian/tests: No longer remove byte code.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 21 Mar 2017 20:52:50 +0100
+
+python-py (1.4.32-3) unstable; urgency=medium
+
+  * debian/tests:
+    - Temporarily remove byte code before running tests.
+    - Allow pypy failures since it is currently not (fully) supported upstream.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 03 Jan 2017 20:50:50 +0100
+
+python-py (1.4.32-2) unstable; urgency=medium
+
+  * debian/patches: Apply upstream patch to mark pytest 3.0 incompatible tests
+    as xfail.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 21 Dec 2016 15:55:19 +0100
+
+python-py (1.4.32-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: Update Homepage.
+  * debian/{control,compat}: Bump debhelper compat to 10.
+  * debian/copyright: Update copyright years.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 20 Dec 2016 19:28:35 +0100
+
+python-py (1.4.31-2) unstable; urgency=medium
+
+  [ Tristan Seligmann ]
+  * Fix VCS-Browser URI.
+
+  [ Sebastian Ramacher ]
+  * debian/control:
+    - Update Vcs-Git.
+    - Bump Standards-Version.
+
+  [ Julian Taylor ]
+  * add pypy-py package
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Mon, 29 Aug 2016 22:11:39 +0200
 
 python-py (1.4.31-1) unstable; urgency=medium
 
@@ -448,7 +649,7 @@ codespeak-lib (0.7-svn20050721-5) unstable; urgency=low
 
 codespeak-lib (0.7-svn20050721-4) unstable; urgency=low
 
-  * Fix debian/rules to not add #!python2.4 on the files for the 2.3 package. 
+  * Fix debian/rules to not add #!python2.4 on the files for the 2.3 package.
     (Closes: #345383)
   * Add a -X.py to dh_compress to make sure .py files are not gziped.
     (Closes: #361201)
@@ -478,4 +679,3 @@ codespeak-lib (0.7-svn20050721) unstable; urgency=low
   * Initial Release.
 
  -- Guilherme Salgado <salgado@async.com.br>  Sat, 23 Jul 2005 10:48:20 -0300
-
