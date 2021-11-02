@@ -1,3 +1,9 @@
+python-py (1.10.0-1pexip1) pexip; urgency=medium
+
+  * Bump version to 1.10.0-1pexip1
+
+ -- Huw Jones <huw@pexip.com>  Tue, 02 Nov 2021 11:57:39 +0000
+
 python-py (1.10.0-1) unstable; urgency=medium
 
   [ Ondřej Nový ]
