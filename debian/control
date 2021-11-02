@@ -2,19 +2,23 @@ Source: python-py
 Section: python
 Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
-XSBC-Pexip-Original-Maintainer: Sebastian Ramacher <sramacher@debian.org>
+Uploaders: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Debian Python Team <team+python@tracker.debian.org>
+XSBC-Pexip-Original-Uploaders: Ondřej Nový <onovy@debian.org>
 Build-Depends:
- debhelper (>= 9),
+ debhelper-compat (= 12),
  dh-python,
- python-all (>= 2.6.6-3~),
- python3-all (>= 3.1.2-6~),
- python-setuptools,
- python3-setuptools
-Standards-Version: 3.9.6
-Homepage: https://bitbucket.org/pytest-dev/py
-X-Python3-Version: >= 3.2
-Vcs-Git: git://anonscm.debian.org/collab-maint/python-py.git
-Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/python-py.git/
+ python3-all,
+ python3-setuptools,
+ python3-setuptools-scm,
+ python3-pytest <!nocheck>,
+ subversion <!nocheck>,
+Standards-Version: 4.5.1
+Homepage: https://github.com/pytest-dev/py
+Vcs-Git: https://salsa.debian.org/python-team/packages/python-py.git
+Vcs-Browser: https://salsa.debian.org/python-team/packages/python-py
+Testsuite: autopkgtest-pkg-python
+Rules-Requires-Root: no
 XS-Pexip-Upstream: http://ftp.debian.org/debian/ bullseye
 
 Package: python3-py
@@ -34,22 +38,3 @@ Description: Advanced Python development support library (Python 3)
   * py.code: dynamic code compile and traceback printing support
  .
  This package provides the Python 3 modules.
-
-Package: python-py
-Architecture: all
-Depends:
- ${misc:Depends},
- ${python:Depends},
- python-pkg-resources
-Suggests:
- subversion,
- python-pytest,
- python-pytest-xdist
-Description: Advanced Python development support library (Python 2)
- The Codespeak py lib aims at supporting a decent Python development process
- addressing deployment, versioning and documentation perspectives. It includes:
- .
-  * py.path: path abstractions over local and Subversion files
-  * py.code: dynamic code compile and traceback printing support
- .
- This package provides the Python 2 modules.
