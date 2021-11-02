@@ -1,3 +1,4 @@
+from collections import namedtuple
 
 import py
 import os, sys
@@ -10,16 +11,22 @@ def test_get_terminal_width():
     assert x == terminalwriter.get_terminal_width
 
 def test_getdimensions(monkeypatch):
-    fcntl = py.test.importorskip("fcntl")
-    import struct
-    l = []
-    monkeypatch.setattr(fcntl, 'ioctl', lambda *args: l.append(args))
-    try:
-        terminalwriter._getdimensions()
-    except (TypeError, struct.error):
-        pass
-    assert len(l) == 1
-    assert l[0][0] == 1
+    if sys.version_info >= (3, 3):
+        import shutil
+        Size = namedtuple('Size', 'lines columns')
+        monkeypatch.setattr(shutil, 'get_terminal_size', lambda: Size(60, 100))
+        assert terminalwriter._getdimensions() == (60, 100)
+    else:
+        fcntl = py.test.importorskip("fcntl")
+        import struct
+        l = []
+        monkeypatch.setattr(fcntl, 'ioctl', lambda *args: l.append(args))
+        try:
+            terminalwriter._getdimensions()
+        except (TypeError, struct.error):
+            pass
+        assert len(l) == 1
+        assert l[0][0] == 1
 
 def test_terminal_width_COLUMNS(monkeypatch):
     """ Dummy test for get_terminal_width
@@ -73,7 +80,7 @@ def test_terminalwriter_dumb_term_no_markup(monkeypatch):
         monkeypatch.undo()
 
 def test_terminalwriter_file_unicode(tmpdir):
-    f = py.std.codecs.open(str(tmpdir.join("xyz")), "wb", "utf8")
+    f = codecs.open(str(tmpdir.join("xyz")), "wb", "utf8")
     tw = py.io.TerminalWriter(file=f)
     assert tw.encoding == "utf8"
 
@@ -89,7 +96,7 @@ def test_unicode_encoding():
 def test_unicode_on_file_with_ascii_encoding(tmpdir, monkeypatch, encoding):
     msg = py.builtin._totext('hell\xf6', "latin1")
     #pytest.raises(UnicodeEncodeError, lambda: bytes(msg))
-    f = py.std.codecs.open(str(tmpdir.join("x")), "w", encoding)
+    f = codecs.open(str(tmpdir.join("x")), "w", encoding)
     tw = py.io.TerminalWriter(f)
     tw.line(msg)
     f.close()
@@ -158,6 +165,12 @@ class TestTerminalWriter:
         assert len(l) == 1
         assert l[0] == "-" * 26 + " hello " + "-" * (27-win32) + "\n"
 
+    def test_sep_longer_than_width(self, tw):
+        tw.sep('-', 'a' * 10, fullwidth=5)
+        line, = tw.getlines()
+        # even though the string is wider than the line, still have a separator
+        assert line == '- aaaaaaaaaa -\n'
+
     @py.test.mark.skipif("sys.platform == 'win32'")
     def test__escaped(self, tw):
         text2 = tw._escaped("hello", (31))
@@ -224,6 +237,27 @@ def test_terminal_with_callable_write_and_flush():
     tw = py.io.TerminalWriter(fil())
     tw.line("hello")
     assert l == set(["2"])
+
+
+def test_chars_on_current_line():
+    tw = py.io.TerminalWriter(stringio=True)
+
+    written = []
+
+    def write_and_check(s, expected):
+        tw.write(s, bold=True)
+        written.append(s)
+        assert tw.chars_on_current_line == expected
+        assert tw.stringio.getvalue() == ''.join(written)
+
+    write_and_check('foo', 3)
+    write_and_check('bar', 6)
+    write_and_check('\n', 0)
+    write_and_check('\n', 0)
+    write_and_check('\n\n\n', 0)
+    write_and_check('\nfoo', 3)
+    write_and_check('\nfbar\nhello', 5)
+    write_and_check('10', 7)
 
 
 @pytest.mark.skipif(sys.platform == "win32", reason="win32 has no native ansi")
