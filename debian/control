@@ -15,7 +15,7 @@ Homepage: https://bitbucket.org/pytest-dev/py
 X-Python3-Version: >= 3.2
 Vcs-Git: git://anonscm.debian.org/collab-maint/python-py.git
 Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/python-py.git/
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ bullseye
 
 Package: python3-py
 Architecture: all
